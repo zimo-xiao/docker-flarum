@@ -85,10 +85,11 @@ RUN mkdir -p /opt/flarum \
   && chown -R flarum. /opt/flarum \
   && rm -rf /root/.composer /tmp/*
 
-RUN mkdir /opt/flarum/packages \
-  && wget https://github.com/eric1932/auto-illini/releases/download/0.1.0/auto-illini.zip --output-file /opt/flarum/packages/auto-illini.zip \
-  && unzip /opt/flarum/packages/auto-illini.zip -d /opt/flarum/packages/ \
-  && rm /opt/flarum/packages/auto-illini.zip \
+RUN mkdir -p /opt/flarum/packages/auto-illini
+
+COPY auto-illini /opt/flarum/packages/auto-illini
+
+RUN cd /opt/flarum \
   && composer config repositories.0 path "packages/*" \
   && composer require fof/default-group *@dev
 
